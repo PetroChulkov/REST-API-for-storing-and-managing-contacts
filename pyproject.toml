@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "web-homework11"
+version = "0.1.0"
+description = ""
+authors = ["PetroChulkov <114095841+PetroChulkov@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "web_homework11"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.95.0"
+uvicorn = {extras = ["standard"], version = "^0.21.1"}
+sqlalchemy = "^2.0.9"
+psycopg2 = "^2.9.6"
+alembic = "^1.10.3"
+pip = "^23.0.1"
+pydantic = {extras = ["email"], version = "^1.10.7"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
