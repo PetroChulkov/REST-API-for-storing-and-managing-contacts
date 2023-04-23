@@ -8,11 +8,13 @@ from src.schemas import ContactBase, ContactResponse, ContactUpdate
 from src.repository import contacts as repository_contacts
 from src.services.auth import auth_service
 from src.database.models import User
+from fastapi_limiter.depends import RateLimiter
 
 router = APIRouter(prefix='/contacts', tags=["contacts"])
 
 
-@router.get("/", response_model=List[ContactResponse], name='All contacts')
+@router.get("/", response_model=List[ContactResponse],description='No more than 10 requests per minute',
+            dependencies=[Depends(RateLimiter(times=10, seconds=60))])
 async def show_contacts(skip: int = 0, limit: int = 100, db: Session = Depends(get_db), current_user: User = Depends(auth_service.get_current_user)):
     contacts = await repository_contacts.show_contacts(skip, limit, current_user, db)
     return contacts
